@@ -8,7 +8,7 @@
   </h2>
 
   <%- if signed_in? %>
-  	<p> Welcome <%= current_user.name %> <%= link_to "Go to your profile page" , current_user %>	</p>
+  	<p> Welcome <%= current_user.name  %> <%= link_to "Go to your profile page" , current_user %>	</p>
   <%- else %>
   	<%= link_to "Sign up now!", signup_path , class: "btn btn-large btn-primary" %>
   <%- end %>	
