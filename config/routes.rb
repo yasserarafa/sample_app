@@ -6,7 +6,11 @@ SampleApp::Application.routes.draw do
     end
   end
   root 'static_pages#home'
-  resources :sessions, only: [:new, :create, :destroy]
+  resources :sessions, only: [:new, :create, :destroy] do
+    collection do
+      get :social_login, :pocket_callback, :getter
+    end
+  end
   resources :relationships, only: [:create, :destroy]
   match '/signup',  to: 'users#new',            via: 'get'
   match '/signin',  to: 'sessions#new',         via: 'get'

@@ -1,4 +1,11 @@
+#require "sinatra"
+
+require "pocket"
+
+
 class SessionsController < ApplicationController
+CALLBACK_URL = "http://localhost:3000/sessions/pocket_callback"
+
 	def new
 
 	end
@@ -14,9 +21,41 @@ class SessionsController < ApplicationController
     	end
 	end
 
+	def pocket_callback
+		access_token = Pocket.get_access_token(session[:code], :redirect_uri => CALLBACK_URL)
+  		session[:access_token] = access_token
+  		#puts "session: #{session}"
+  		redirect_to getter_sessions_path
+	end
+
+	def social_login
+		session[:code] = Pocket.get_code(:redirect_uri => CALLBACK_URL)
+  		new_url = Pocket.authorize_url(:code => session[:code], :redirect_uri => CALLBACK_URL)
+  		puts "new_url: #{new_url}"
+  		puts "session: #{session}"
+  		redirect_to new_url
+	end
+
+
 	def destroy
     	sign_out
     	redirect_to root_path
   	end
+
+  	def getter
+  		client = Pocket.client(:access_token => session[:access_token])
+  		info = client.retrieve :detailType => :complete
+  		@list = info["list"]
+  		# binding.pry
+
+  # html = "<h1>#{user.username}'s recent photos</h1>"
+  # for media_item in client.user_recent_media
+  #   html << "<img src='#{media_item.images.thumbnail.url}'>"
+  # end
+  # html	
+  	end
+
+
+  
 
 end
