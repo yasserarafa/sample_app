@@ -1,0 +1,21 @@
+<h3> <%= @obj[0].title%> </h>
+	<br/>
+
+<pre> <%= @obj[0].description%> </pre>
+
+<pre> <%= raw(@obj[0].content)%> </pre>
+
+
+<!-- 
+<table>
+
+  <tbody>
+    <% @obj.each do |i| %>
+      <tr>
+        <td><%= i %></td>
+      	<td><%= link_to 'Go to it',embed_sessions_path %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+ -->

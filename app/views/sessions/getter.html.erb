@@ -16,7 +16,8 @@
     <% @list.values.each do |i| %>
       <tr>
         <td><%= i["given_title"] %></td>
-      	<td><%= link_to 'Go to it', i["given_url"] %></td>
+      	<td><%= link_to 'Go to it',i["given_url"] %></td>
+        <td><%= link_to 'Show',embed_sessions_path(given_url: i["given_url"]) %></td>
       </tr>
     <% end %>
   </tbody>

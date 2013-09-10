@@ -16,7 +16,6 @@ class User < ActiveRecord::Base
 	has_secure_password
 	validates :password, length: { minimum: 6 }
 
-
   def feed
     Micropost.from_users_followed_by(self)
   end

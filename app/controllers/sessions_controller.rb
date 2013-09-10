@@ -1,7 +1,7 @@
 #require "sinatra"
 
 require "pocket"
-
+require "embedly"
 
 class SessionsController < ApplicationController
 CALLBACK_URL = "http://localhost:3000/sessions/pocket_callback"
@@ -54,6 +54,12 @@ CALLBACK_URL = "http://localhost:3000/sessions/pocket_callback"
   # end
   # html	
   	end
+
+    def embed
+        url = params[:given_url]
+        embedly_api = Embedly::API.new :key => '0d3275c1abf64c6f85ba10c8c197e7ef'
+        @obj = embedly_api.extract :url => url
+    end
 
 
   

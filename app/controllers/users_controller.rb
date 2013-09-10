@@ -6,6 +6,7 @@ class UsersController < ApplicationController
 	def show
 		@user = User.find(params[:id])
     @microposts = @user.microposts
+    #get "https://getpocket.com/v3/get?c=juj&g=njnk"
 	end
   def new
   		@user = User.new

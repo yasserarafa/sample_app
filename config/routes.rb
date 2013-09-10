@@ -8,7 +8,7 @@ SampleApp::Application.routes.draw do
   root 'static_pages#home'
   resources :sessions, only: [:new, :create, :destroy] do
     collection do
-      get :social_login, :pocket_callback, :getter
+      get :social_login, :pocket_callback, :getter, :embed
     end
   end
   resources :relationships, only: [:create, :destroy]
