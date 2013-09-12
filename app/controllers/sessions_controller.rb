@@ -6,7 +6,7 @@ require "configatron"
 
 
 class SessionsController < ApplicationController
-CALLBACK_URL = "#{configatron.address}/sessions/pocket_callback"
+CALLBACK_URL = "#{root_path}/sessions/pocket_callback"
 
 	def new
 
