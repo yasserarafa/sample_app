@@ -47,6 +47,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
+    configatron (3.0.0.rc1)
     diff-lcs (1.2.4)
     embedly (1.8.0)
       json
@@ -184,6 +185,7 @@ DEPENDENCIES
   bootstrap-sass (= 2.3.2.0)
   capybara (= 2.1.0)
   coffee-rails (= 4.0.0)
+  configatron (= 3.0.0.rc1)
   embedly
   jbuilder (= 1.0.2)
   jquery-rails (= 2.2.1)

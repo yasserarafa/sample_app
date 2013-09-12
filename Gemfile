@@ -23,6 +23,7 @@ gem 'jbuilder', '1.0.2'
 gem 'pocket-ruby'
 gem 'pry'
 gem 'embedly'
+gem 'configatron', '3.0.0.rc1'
 
 group :doc do
   gem 'sdoc', '0.3.20', require: false

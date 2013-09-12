@@ -2,9 +2,11 @@
 
 require "pocket"
 require "embedly"
+require "configatron"
+
 
 class SessionsController < ApplicationController
-CALLBACK_URL = "http://localhost:3000/sessions/pocket_callback"
+CALLBACK_URL = "#{configatron.address}/sessions/pocket_callback"
 
 	def new
 
