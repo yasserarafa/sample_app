@@ -1,0 +1,18 @@
+defaults: &defaults
+  host: "https://polar-plateau-1770.herokuapp.com"
+
+development:
+  <<: *defaults
+  host: "http://localhost:3000"
+
+test:
+  <<: *defaults
+  host: "//staging-yieldify.herokuapp.com"    
+
+staging:
+  <<: *defaults
+  host: "https://polar-plateau-1770.herokuapp.com"
+
+production:
+  <<: *defaults
+  host: "//polar-plateau-1770.herokuapp.com"

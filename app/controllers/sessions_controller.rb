@@ -2,11 +2,12 @@
 
 require "pocket"
 require "embedly"
-require "configatron"
+
 
 
 class SessionsController < ApplicationController
-CALLBACK_URL = "https://polar-plateau-1770.herokuapp.com/sessions/pocket_callback"
+
+  before_filter :set_callback_url, only: [:pocket_callback,:social_login,:favorite]
 
 	def new
 
@@ -24,15 +25,15 @@ CALLBACK_URL = "https://polar-plateau-1770.herokuapp.com/sessions/pocket_callbac
 	end
 
 	def pocket_callback
-		access_token = Pocket.get_access_token(session[:code], :redirect_uri => CALLBACK_URL)
+		access_token = Pocket.get_access_token(session[:code], :redirect_uri => @CALLBACK_URL)
   		session[:access_token] = access_token
   		#puts "session: #{session}"
   		redirect_to getter_sessions_path
 	end
 
 	def social_login
-		session[:code] = Pocket.get_code(:redirect_uri => CALLBACK_URL)
-  		new_url = Pocket.authorize_url(:code => session[:code], :redirect_uri => CALLBACK_URL)
+		session[:code] = Pocket.get_code(:redirect_uri => @CALLBACK_URL)
+  		new_url = Pocket.authorize_url(:code => session[:code], :redirect_uri => @CALLBACK_URL)
   		puts "new_url: #{new_url}"
   		puts "session: #{session}"
   		redirect_to new_url
@@ -48,7 +49,7 @@ CALLBACK_URL = "https://polar-plateau-1770.herokuapp.com/sessions/pocket_callbac
   		client = Pocket.client(:access_token => session[:access_token])
   		info = client.retrieve :detailType => :complete
   		@list = info["list"]
-  		# binding.pry
+  		
 
   # html = "<h1>#{user.username}'s recent photos</h1>"
   # for media_item in client.user_recent_media
@@ -63,7 +64,39 @@ CALLBACK_URL = "https://polar-plateau-1770.herokuapp.com/sessions/pocket_callbac
         @obj = embedly_api.extract :url => url
     end
 
+    def favorite
+        id = params[:id]
+        client = Pocket.client(:access_token => session[:access_token])
+        client.modify [{:action => :favorite , :item_id => id}]
+        redirect_to getter_sessions_path
+    end
 
+    def unfavorite
+        id = params[:id]
+        client = Pocket.client(:access_token => session[:access_token])
+        client.modify [{:action => :unfavorite , :item_id => id}]
+        redirect_to getter_sessions_path
+    end
+
+    def  archive
+         id = params[:id]
+        client = Pocket.client(:access_token => session[:access_token])
+        client.modify [{:action => :archive , :item_id => id}]
+        redirect_to getter_sessions_path 
+    end
+
+    def delete
+      id = params[:id]
+        client = Pocket.client(:access_token => session[:access_token])
+        client.modify [{:action => :delete , :item_id => id}]
+        redirect_to getter_sessions_path 
+    end
+
+
+
+    def set_callback_url
+      @CALLBACK_URL = "#{APP_CONFIG['host']}/sessions/pocket_callback"
+    end
   
 
 end

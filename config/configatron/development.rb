@@ -3,4 +3,4 @@
 # Example:
 #   configatron.file.storage = :local
 
-configatron.address = root_path
+configatron.domain = "http://localhost:3000/"

@@ -18,7 +18,15 @@
         <td><%= i["given_title"] %></td>
       	<td><%= link_to 'Go to it',i["given_url"] %></td>
         <td><%= link_to 'Show',embed_sessions_path(given_url: i["given_url"]) %></td>
+        <%- if i["favorite"] == "0" %>
+          <td><%= link_to 'Favorite',favorite_sessions_path(id: i["item_id"]) %></td>
+        <%- else %>
+          <td><%= link_to 'Unfavorite',unfavorite_sessions_path(id: i["item_id"]) %></td>
+        <%- end %>
+        <td><%= link_to 'Archive',archive_sessions_path(id: i["item_id"]) %></td>
+        <td><%= link_to 'Delete',delete_sessions_path(id: i["item_id"]) %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
