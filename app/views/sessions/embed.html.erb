@@ -6,6 +6,14 @@
 <pre> <%= raw(@obj[0].content)%> </pre>
 
 
+<%= link_to 'Archive',archive_sessions_path(id: @item_id) %>
+
+<%- if @favorite == "0" %>
+          <%= link_to 'Favorite',favorite_sec_sessions_path(given_url: @obj[0].url, item_id: @item_id) %>
+        <%- else %>
+          <%= link_to 'unFavorite',unfavorite_sec_sessions_path(given_url: @obj[0].url,item_id: @item_id) %>
+<%- end %>
+
 <!-- 
 <table>
 

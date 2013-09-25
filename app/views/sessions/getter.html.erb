@@ -13,11 +13,11 @@
   </thead>
 
   <tbody>
-    <% @list.values.each do |i| %>
+      <% @list.values.each do |i| %>
       <tr>
         <td><%= i["given_title"] %></td>
       	<td><%= link_to 'Go to it',i["given_url"] %></td>
-        <td><%= link_to 'Show',embed_sessions_path(given_url: i["given_url"]) %></td>
+        <td><%= link_to 'Show',embed_sessions_path(given_url: i["given_url"],item_id: i["item_id"],fav: i["favorite"]) %></td>
         <%- if i["favorite"] == "0" %>
           <td><%= link_to 'Favorite',favorite_sessions_path(id: i["item_id"]) %></td>
         <%- else %>
@@ -29,4 +29,6 @@
     <% end %>
   </tbody>
 </table>
+
+<%= link_to "Send to Kindle", send_to_kindle_sessions_path , class: "btn btn-large btn-primary" %>
 

@@ -1,0 +1,148 @@
+Gunman Aaron Alexis had grudge against US Navy and was Buddhist, friends sa
+<div>
+<p>A former reservist who shot dead 12 people at US Navy headquarters before being killed in a shoot-out with police appears to have had a grudge against his former employers.</p>
+<p>Friends and acquaintances of Aaron Alexis expressed shock at how the 34-year-old, a convert to Buddhism who had spoken about becoming a monk, could be behind America's latest mass shooting.</p>
+<p>They said he had often complained at his treatment by the Navy after serving as a reservist from 2007 to 2011. One said that he thought he had never earned a promotion "because of the colour of his skin".</p>
+<p>The</p>
+</div>
+ruby - How to find a hash key containing a matching value - Stack Overflow
+<div>
+<div>
+<div>
+<p><a href="http://stackoverflow.com/about">Tell me more</a> &#215;</p>
+<div>
+<p>Stack Overflow is a question and answer site for professional and enthusiast programmers. It's 100% free, no registration required.</p>
+</div> 
+</div>
+<div>
+<div>
+<p>
+</p><p>Given I have the below <strong>clients</strong> hash, is there a quick ruby way (without having to write a multi-line script) to obtain the key given I want to match the client_id? E.g. How to get the key for <code>client_id == "2180"</code>?</p>
+<pre><code>clients = { "yellow"=&gt;{"client_id"=&gt;"2178"}, "orange"=&gt;{"client_id"=&gt;"2180"}, "red"=&gt;{"client_id"=&gt;"2179"}, "blue"=&gt;{"client_id"=&gt;"2181"} } </code></pre>
+
+</div>
+<div>
+<div>
+<p>
+</p><p>You could use <a href="http://rubydoc.info/docs/ruby-core/1.9.2/Enumerable%3aselect">Enumerable#select</a>:</p>
+<pre><code>clients.select{|key, hash| hash["client_id"] == "2180" } #=&gt; [["orange", {"client_id"=&gt;"2180"}]] </code></pre>
+<p>Note that the result will be an array of all the matching values, where each is an array of the key and value.</p>
+
+</div>
+<div>
+<p>
+</p><p>You could use <a href="http://ruby-doc.org/core/classes/Hash.html#M002855"><code>hash.index</code></a></p>
+<blockquote>
+<p><code>hsh.index(value) =&gt; key</code> </p>
+<p>Returns the key for a given value. If not found, returns <code>nil</code>. </p>
+<code>h = { "a" =&gt; 100, "b" =&gt; 200 }</code><br><code>h.index(200) #=&gt; "b"</code><br><code>h.index(999) #=&gt; nil</code></blockquote>
+<p>So to get <code>"orange"</code>, you could just use:</p>
+<pre><code>clients.index({"client_id" =&gt; "2180"}) </code></pre>
+
+</div>
+<div>
+<p>
+</p><p>You can invert the hash. <code>clients.invert["client_id"=&gt;"2180"]</code> returns <code>"orange"</code></p>
+
+</div>
+<div>
+<p>
+</p><p>You could use hashname.key(valuename)</p>
+<p>Or, an inversion may be in order. <code>new_hash = hashname.invert</code> will give you a <code>new_hash</code> that lets you do things more traditionally.</p>
+
+</div>
+<div>
+<p>
+</p><p>try this:</p>
+<pre><code>clients.find{|key,value| value["client_id"] == "2178"}.first </code></pre>
+
+</div>
+<div>
+<p>
+</p><p>The best way to find the key for a particular value is to use key method that is available for a hash....</p>
+<pre><code>gender = {"MALE" =&gt; 1, "FEMALE" =&gt; 2} gender.key(1) #=&gt; MALE </code></pre>
+<p>I hope it solves your problem... </p>
+
+</div>
+<div>
+<p>
+</p><p>From the docs:</p>
+<p>
+</p><ul><li>(Object?) detect(ifnone = nil) {|obj| ... }</li>
+	<li>(Object?) find(ifnone = nil) {|obj| ... }</li>
+	<li>(Object) detect(ifnone = nil)</li>
+	<li>(Object) find(ifnone = nil)</li>
+</ul><p>Passes each entry in enum to block. Returns the first for which block is not false. If no object matches, calls ifnone and returns its result when it is specified, or returns nil otherwise.</p>
+<p>If no block is given, an enumerator is returned instead.</p>
+<pre><code>(1..10).detect {|i| i % 5 == 0 and i % 7 == 0 } #=&gt; nil (1..100).detect {|i| i % 5 == 0 and i % 7 == 0 } #=&gt; 35 </code></pre>
+<p>This worked for me:</p>
+<pre><code>clients.detect{|client| client.last['client_id'] == '2180' } #=&gt; ["orange", {"client_id"=&gt;"2180"}] clients.detect{|client| client.last['client_id'] == '999999' } #=&gt; nil </code></pre>
+<p>See: <a href="http://rubydoc.info/stdlib/core/1.9.2/Enumerable#find-instance_method">http://rubydoc.info/stdlib/core/1.9.2/Enumerable#find-instance_method</a></p>
+
+</div>
+<h2>Not the answer you're looking for? Browse other questions tagged <a href="http://stackoverflow.com/questions/tagged/ruby">ruby</a> or <a href="http://stackoverflow.com/questions/ask">ask your own question</a>. </h2>
+</div>
+</div>
+<div><img src="http://stackoverflow.com/posts/3794039/ivc/b0bb"></div> 
+</div>
+<div>
+<p>Stack Overflow works best with JavaScript enabled</p>
+<img src="http://pixel.quantserve.com/pixel/p-c1rF4kxgLUzNc.gif"></div>
+</div>
+Excerpts from an Interview with Dr. Mohamed ElBaradei on Sept. 7, 2007 - Ne
+<div>
+<p>Squash is a very fast game. You have to have very quick reflexes. You have to be cunning, because most of time you don't see, your opponent is behind you, so you need to anticipate...</p>
+<p>Are there lessons for life? For diplomacy, from what you learned in squash? </p>
+<p>You have to give it your all. </p>
+<p> [...]</p>
+<p>Unfortunately I can not play squash right now. I'm too old to play squash. But, yes, golf is a game where you try to go into a completely different environment. Beautiful landscapes.</p>
+<p>[...]</p>
+<p>It just gets your mind off your work. I'm a lousy golf player, so you try your best to try to put this little ball into the hole and that's excellent therapy.</p>
+<p>[...] </p>
+<p>On his childhood: </p>
+<p>I grew up in a conservative household. That was the life of the time in Egypt, a conservative, middle-class household. [I had] good caring parents, with lots of roots but a lot of affection and love. But it was basically a conservative upbringing; we focused on values, focused on education. I was exposed, early on to a lot of things which I still enjoy, like classical music. My father used to love classical music.</p>
+<p>[...] </p>
+<p>Did your mother wear a headscarf? </p>
+<p>No, only lately, she started to wear them. When I was growing up, there was not a single woman in Egypt that was wearing a scarf. That was not the thing. This is all the last ten years, I would say.</p>
+<p>So she has started to wear one now? </p>
+<p>Five, ten year. I think it's more of a ... I don't know whether it's peer pressure. It's tradition now. This is one of the issues I discuss with her every single day, that it doesn't make sense for you to wear it. But, in a joking way. She's 82, so I'm not going to change the way she thinks now. But this is one of the contentious issues I have with her, that I tease her about it. </p>
+<p>[...]</p>
+<p>To what extent does your religion help shape your world view? </p>
+<p>Not much, as much as any religion. To me religion is the core values [with] which I felt as comfortable Christians, with Buddhists, with Jews. I don't see much difference. [...] Egypt at that time was multi-cultural. I remember I used to play squash. I bought the equipment from a shop that was run by Australians. My father used to go rowing and his trainer was an Italian. My mother used to go to a tailor, "Madame Euphegine", she was French. My parents used to buy me toys from a shop, Mr. Zak, who was Jewish. Egypt was in a way was very much, religion was not something people talked about. [...] But, religion to me, at that time, and continues to be, it's a good guiding set of principles which I share with everybody else. My daughter's husband is British, my first girlfriend was Jewish. I never really felt that religion is a major factor I have to take into account. </p>
+<p>On becoming a lawyer: </p>
+<p>I always wanted to be a lawyer. I don't know why. [...] I guess law was always interesting to me because you deal with constants. I like to deal with constants, abstracts, constants and reason and ration, rational approaches to things. I don't know, I never really thought why I wanted to study law. But if you ask me, whether I would do it again, absolutely. I love law, more in the sense of having a structured approach to dealing with irrational approach. You learn how to think in a rational way, in a logical manner. That helps you in anything you do in life.</p>
+<p>[...]</p>
+<p>On his role as IAEA Director General: </p>
+<p>I would probably say: I'm not a technician fixing cameras. People would like to downsize me, put me in the job of a technician fixing cameras but I don't see my role like that. </p>
+<p>[...]</p>
+<p>On his New York experience: </p>
+<p>New York was an eye-opener for me. All of a sudden I came from a sheltered life, of living with my parents, being taken care of, to a person who has to be completely self dependent, have his own apartment, have to pay his bills and earn his living. I got into this melting pot where every other person was different, speaking a different language, from different ethnicities. It was for me, great. Just the excitement of just meeting people from every place and exposed to every thing new. From baseball to the opera.</p>
+<p>[...]</p>
+<p>I was single at that time. You can just afford spending all your time on going out. Then of course, I took time off, three years, and then I went to NYU, to do my doctorate. </p>
+<p>[...]</p>
+<p>I took leave [from the Egyptian Foreign Service] completely and then I went to live in Greenwich Village and that was the best three years of my life, I think. </p>
+<p>[...] </p> 
+</div>
+Almost 50 million Americans now on food stamps as nation plunges into wides
+<div>
+<p>(NaturalNews) As economic recovery continues to prove dismal if not illusory, American families are signing up for food stamps in record numbers, showing signs that poverty is increasing and the job market is far from recovering.</p>
+<p>According to official U.S. Department of Agriculture (USDA) numbers, households on food stamps increased by 45,900 in one month, hitting a staggering new high in June of <b>23.117</b> million households, with an additional 125,079 individuals signing up for Supplemental Nutrition Assistance Program (SNAP) benefits, a <b>near-record 47.76 million people</b> that is just below the December 2012 peak of 47.79 million.</p>
+<p>More than 80% of those families receiving food stamp benefits are at or below the poverty line, with more than 61% of households drastically below the poverty line, making less than $14,648 in a year per household of three.</p>
+<p>These numbers reflect a bigger trend that is all but abysmal in scope - that more than <b>22 million people have been added to the government dole</b> since December 2007, at the onset of the economic crisis that has spiraled into near depression levels. According to Zero Hedge, more than 2.2 million jobs are needed to reach equilibrium with Fall 2008 levels of employment and cost of living affordability.</p>
+<p>Worse, many of the new employment opportunities only offer part time or low wage jobs, threatening the viability of more and more households. So many of the unemployment numbers do not accurately reflect the health of the nation, and, in fact, have helped to hide the decline.</p>
+<p>The USDA has been aiding this by promoting its SNAP <a href="http://www.naturalnews.com/food.html">food</a> stamp program to persons above - but near - the poverty line, essentially acknowledging that their prospects in the economy are dim despite cheerleading from the Obama Administration to the contrary. While <a href="http://www.naturalnews.com/food_stamps.html">food stamps</a> officially benefit those working part time or for low wages, the unemployed, welfare recipients, the elderly and disabled as well as the homeless, taxpayer-funded advertisement campaigns have been recruiting struggling families still earning a living to sign up for SNAP rosters as well. The USDA has specifically targeted children from low income households, Latino immigrants with Spanish-language soap operas embedded with appealing messages as well as individuals from America's heartland who suffer from "mountain pride," a term deliberately coined to combat "self-reliant" attitudes and entice individuals and families resistant to hand outs to take on benefits, and with it, increased government dependence.</p>
+<p>Outwardly, of course, this a hand-up to those facing hard times. But put together with data revealing a non-existent job recovery and the new norm of subpar employment (a combination of part time and low wage jobs), it offers families barely getting by little hope of ever really getting out of poverty.</p>
+<p>By actively driving up food stamp numbers, the Obama Administration is temporarily staving off the implosion of a clearly unsustainable economy and plugging the hole of an all-but-exploding dam. But behind the scenes, those who still have jobs and pay taxes are getting hit harder than ever, while those receiving benefits are scraping by with less as well.</p>
+<p>At the same time food stamp recipients have climbed sharply - reaching numbers nearly double those seen December 2007 before the collapse set it - the average benefit has declined. This forces those at or near poverty to stretch their food dollars even thinner, putting more items out of reach and lower quality items in the basket, as inflation touched 9.4% in recent weeks. Households received an average of only $274.55 under SNAP in June 2012, as compared with $293.89 per month as of October 2009, while individuals enrolled in SNAP received average benefits of $132.89 per month in June 2012, a statistical drop from $134.60 in October 2009.</p>
+<b>Sources for this article include:</b> <a href="http://www.zerohedge.com/news/2013-09-08/households-foodstamps-rise-new-record-high-more-americans-live-poverty-population-sp">http://www.zerohedge.com</a> <a href="http://www.fns.usda.gov/pd/34SNAPmonthly.htm">http://www.fns.usda.gov</a> <a href="http://www.washingtonpost.com/blogs/in-the-loop/post/usda-uses-soap-opera-to-educate-on-food-stamps/2012/07/12/gJQAqEkpfW_blog.html">http://www.washingtonpost.com</a> <p><a href="http://www.foxnews.com/politics/2012/06/28/food-stamp-programs-promoting-with-parties-games/">http://www.foxnews.com</a></p>
+<p><a href="http://www.naturalnews.com/newstips/NewsTips.asp"><img src="http://www.naturalnews.com/images/Have-A-News-Tip-v2.gif"></a></p>
+<h2>Have comments on this article? Post them here:</h2>
+<p>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a><a href="http://disqus.com">comments powered by </a></p>
+</div>
+Veils shouldn’t be banned. Except sometimes | The Times
+<div>
+<p>A niqab is a barrier, worn to repel. It is un-British - but so too is a blanket ban on them being worn</p>
+<p>The best contribution I have yet heard to the debate on the ethics of veils came a few months ago, on Radio 4, from the comedian Francesca Martinez. To avoid the glare of men, she noted, some women drape themselves from head to toe in material, save for the strip they cut away to see. She felt she had a more economical solution. "Keep that strip and get men to put it over their eyes," she suggested, "and then you can wear what you like."</p>
+<p>Niqabs are very now. Last week, following a protest, Birmingham's Metropolitan College un-banned the niqab</p>
+</div>
+Hosni Mubarak’s Path From Presidency to Prison and Beyond - Timeline - NYTi
