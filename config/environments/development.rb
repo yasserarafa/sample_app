@@ -32,12 +32,13 @@ SampleApp::Application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_options = {from: 'no-replay@example.com'}
 
-  config.action_mailer.server_settings = {
-   :address => "smtp.tutorialspoint.com",
-   :port => 25,
-   :domain => "tutorialspoint.com",
-   :authentication => :login,
-   :user_name => "username",
-   :password => "password",
-  }
+ActionMailer::Base.smtp_settings = {
+  :address        => 'smtp.sendgrid.net',
+  :port           => '587',
+  :authentication => :plain,
+  :user_name      => ENV['SENDGRID_USERNAME'],
+  :password       => ENV['SENDGRID_PASSWORD'],
+  :domain         => 'heroku.com',
+  :enable_starttls_auto => true
+}
 end
