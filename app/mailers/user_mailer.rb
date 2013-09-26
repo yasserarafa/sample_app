@@ -1,9 +1,9 @@
 class UserMailer < ActionMailer::Base
-  default from: "from@example.com"
+  default from: "yassoraa88@hotmail.com"
 
   def welcome_email()
-   
-    @url  = 'http://example.com/login'
-    mail(to: "yassoraa88@yahoo.com", subject: 'Welcome to My Awesome Site')
+    mail(to: "yassoraa88@gmail.com", subject: '1000 mabrook')
+    attachments['RAILS.PNG'] = File.read('/home/yasser/rails apps/sample_app/app/assets/images/rails.png')
+
   end
 end
