@@ -132,10 +132,11 @@ class SessionsController < ApplicationController
         end
       end
       
-      f = File.open("ready.html", "w")
+      f = Tempfile.new('ready')
       f.write(x)
+      f.rewind
       f.close
-      UserMailer.welcome_email().deliver
+      UserMailer.welcome_email(f).deliver
 
       redirect_to getter_sessions_path 
 
