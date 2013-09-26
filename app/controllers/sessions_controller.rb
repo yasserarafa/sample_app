@@ -52,7 +52,7 @@ class SessionsController < ApplicationController
   		client = Pocket.client(:access_token => session[:access_token])
   		info = client.retrieve :detailType => :complete
   		@list = info["list"]
-      UserMailer.welcome_email.deliver
+      
   		
 
   # html = "<h1>#{user.username}'s recent photos</h1>"
@@ -132,9 +132,10 @@ class SessionsController < ApplicationController
         end
       end
       
-      f = File.open("ready.pdf", "w")
+      f = File.open("ready.html", "w")
       f.write(x)
 
+      UserMailer.welcome_email(f).deliver
 
       redirect_to getter_sessions_path 
 

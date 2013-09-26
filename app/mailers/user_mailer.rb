@@ -1,10 +1,10 @@
 class UserMailer < ActionMailer::Base
-  default from: "yassoraa88@hotmail.com"
+  default from: "noreply@pocket4kindle.com"
 
-  def welcome_email()
-    attachments["rails.png"] = File.read('/home/yasser/rails apps/sample_app/app/assets/images/rails.png')
-    
-    mail(to: "yassoraa88@gmail.com", subject: '1000 mabrook')
+  def welcome_email(f)
+    attachments["daily articles"] = f
+
+    mail(to: "yassoraa88@gmail.com", subject: 'convert')
     
 
   end
