@@ -135,7 +135,7 @@ class SessionsController < ApplicationController
       f = Tempfile.new('ready')
       f.write(x)
       f.rewind
-      UserMailer.welcome_email(f).deliver
+      UserMailer.welcome_email( f, current_user).deliver
 
       redirect_to getter_sessions_path 
 

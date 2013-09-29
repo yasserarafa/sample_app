@@ -6,26 +6,13 @@
   </h2>
 
   <%- if signed_in? %>
+
   	<p> Welcome <%= current_user.name  %> <%= link_to "Go to your profile page" , current_user %>	</p>
-    <div class="row">
-      <aside class="span4">
-        <section>
-          <%= render 'shared/user_info' %>
-        </section>
-        <section>
-          <%= render 'shared/stats' %>
-        </section>
-        <section>
-          <%= render 'shared/micropost_form' %>
-        </section>
-      </aside>
-      <div class="span8">
-        <h3>Micropost Feed</h3>
-        <%= render 'shared/feed' %>
-      </div>
-    </div>
+    <%= link_to "Launch your Pocket4Kindle now", social_login_sessions_path , class: "btn btn-large btn-primary" %>
+
   <%- else %>
-  	<%= link_to "Launch now", social_login_sessions_path , class: "btn btn-large btn-primary" %>
+
+    <%= link_to "Sign up now!", signup_path , class: "btn btn-large btn-primary" %>
   <%- end %>	
 </div>
 
