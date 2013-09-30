@@ -2,33 +2,25 @@
  <h1>Recent Media</h1>
 
 <table>
-  <thead>
-    <tr>
-      <th>Content</th>
-      <th>URL</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
+
 
   <tbody>
-      <% @list.values.each do |i| %>
+      <% current_user.articles.each do |i| %>
+      <%= binding.pry %>
       <tr>
-        <td><%= i["given_title"] %></td>
-      	<td><%= link_to 'Go to it',i["given_url"] %></td>
-        <td><%= link_to 'Show',embed_sessions_path(given_url: i["given_url"],item_id: i["item_id"],fav: i["favorite"]) %></td>
-        <%- if i["favorite"] == "0" %>
-          <td><%= link_to 'Favorite',favorite_sessions_path(id: i["item_id"]) %></td>
+        <td><%= i.title %></td>
+      	<td><%= link_to 'Go to it',i.url %></td>
+        <td><%= link_to 'Show',embed_sessions_path(item_id: i.item_id) %></td>
+        <%- if i.favorite == 0 %>
+          <td><%= link_to 'Favorite',favorite_sessions_path(id: i.item_id) %></td>
         <%- else %>
-          <td><%= link_to 'Unfavorite',unfavorite_sessions_path(id: i["item_id"]) %></td>
+          <td><%= link_to 'Unfavorite',unfavorite_sessions_path(id: i.item_id) %></td>
         <%- end %>
-        <td><%= link_to 'Archive',archive_sessions_path(id: i["item_id"]) %></td>
-        <td><%= link_to 'Delete',delete_sessions_path(id: i["item_id"]) %></td>
+        <td><%= link_to 'Archive',archive_sessions_path(id: i.item_id) %></td>
+        <td><%= link_to 'Delete',delete_sessions_path(id: i.item_id) %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <%= link_to "Send to Kindle", send_to_kindle_sessions_path , class: "btn btn-large btn-primary" %>
-

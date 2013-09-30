@@ -1,29 +1,15 @@
-<h3> <%= @obj[0].title%> </h>
+<h3> <%= @item.title%> </h>
 	<br/>
 
-<pre> <%= @obj[0].description%> </pre>
+<pre> <%= @item.description%> </pre>
 
-<pre> <%= raw(@obj[0].content)%> </pre>
+<pre> <%= raw(@item.content)%> </pre>
 
 
-<%= link_to 'Archive',archive_sessions_path(id: @item_id) %>
+<%= link_to 'Archive',archive_sessions_path(id: @item.item_id) %>
 
-<%- if @favorite == "0" %>
-          <%= link_to 'Favorite',favorite_sec_sessions_path(given_url: @obj[0].url, item_id: @item_id) %>
+<%- if @item.favorite == 0 %>
+          <%= link_to 'Favorite',favorite_sec_sessions_path(given_url: @item.url, item_id: @item.item_id) %>
         <%- else %>
-          <%= link_to 'unFavorite',unfavorite_sec_sessions_path(given_url: @obj[0].url,item_id: @item_id) %>
+          <%= link_to 'unFavorite',unfavorite_sec_sessions_path(given_url: @item.url,item_id: @item.item_id) %>
 <%- end %>
-
-<!-- 
-<table>
-
-  <tbody>
-    <% @obj.each do |i| %>
-      <tr>
-        <td><%= i %></td>
-      	<td><%= link_to 'Go to it',embed_sessions_path %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
- -->
