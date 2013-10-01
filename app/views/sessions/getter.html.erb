@@ -6,7 +6,6 @@
 
   <tbody>
       <% current_user.articles.each do |i| %>
-      <%= binding.pry %>
       <tr>
         <td><%= i.title %></td>
       	<td><%= link_to 'Go to it',i.url %></td>
