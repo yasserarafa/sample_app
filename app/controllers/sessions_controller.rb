@@ -8,6 +8,8 @@ require "embedly"
 class SessionsController < ApplicationController
 
     before_filter :set_callback_url, only: [:pocket_callback,:social_login,:favorite]
+    # before_filter :initialize_article, only: :getter
+    # after_filter :remove_deleted, only: :getter
 
   	def new
 
@@ -51,29 +53,79 @@ class SessionsController < ApplicationController
   	def getter
   		client = Pocket.client(:access_token => session[:access_token])
   		info = client.retrieve :detailType => :complete
-  		@list = info["list"]
-      @list.values.each do |i|
+  		list = info["list"]
+      # ret = current_user.articles
+      # puts "before loop > > > > > > > > > > > > > "
+      # puts current_user.articles.length
+      # puts "> > > > > > > > > > > > > "
+      x = current_user.articles.pluck("item_id")
+      y = list.keys.map(&:to_i)
 
+      new_items = y - x
+      deleted_items = x - y
+
+      deleted_items.each do |i|
+        current_user.articles.find_by_item_id(i).destroy
+      end
+
+      new_items.each do |j|
+        i = list[j.to_s]
+
+        id = i["item_id"]
         url = i["given_url"]
-        x = current_user.articles.find_by_url url
-        if x 
-          puts "kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk"
+
+        if current_user.articles.find_by_item_id id
+            current_user.articles.find_by_item_id(id).update_attributes(:favorite=>i["favorite"])
         else
           embedly_api = Embedly::API.new :key => '0d3275c1abf64c6f85ba10c8c197e7ef'
-          @obj = embedly_api.extract :url => url
+          obj = embedly_api.extract :url => i["given_url"]
 
           article = Article.new
           article.user = current_user
-          article.title = @obj[0].title
-          article.description = @obj[0].description
-          article.content = @obj[0].content
+          article.title = obj[0].title
+          article.description = obj[0].description
+          article.content = obj[0].content
           article.item_id = i["item_id"]
           article.favorite = i["favorite"]
           article.url = i["given_url"]
           article.save
         end
-      
       end
+
+
+
+      # list.values.each do |i|
+        
+      #   id = i["item_id"]
+      #   url = i["given_url"]
+
+      #   if current_user.articles.find_by_item_id id
+      #     puts "found >>>>>>>>>>>>>>>>>>>>>>>>>"
+      #     current_user.articles.find_by_item_id(id).update_attributes(:found=>1,:favorite=>i["favorite"])
+
+      #   else
+      #     puts "new > > > > > > "
+      #     embedly_api = Embedly::API.new :key => '0d3275c1abf64c6f85ba10c8c197e7ef'
+      #     obj = embedly_api.extract :url => url
+
+      #     article = Article.new
+      #     article.user = current_user
+      #     article.title = obj[0].title
+      #     article.description = obj[0].description
+      #     article.content = obj[0].content
+      #     article.item_id = i["item_id"]
+      #     article.favorite = i["favorite"]
+      #     article.url = i["given_url"]
+      #     article.found = 1
+      #     article.save
+      #   end     
+      # end
+      # puts "after > > > > > > > > > > > > > "
+      # puts current_user.articles.length
+      # puts "#{current_user.articles.pluck("found")}"  
+
+
+
 
     end
       	
@@ -96,8 +148,10 @@ class SessionsController < ApplicationController
         url=params[:given_url]
         client = Pocket.client(:access_token => session[:access_token])
         client.modify [{:action => :favorite , :item_id => id}]
-        current_user.articles.find_by(item_id: id).favorite = 1
-        redirect_to embed_sessions_path(given_url: url,item_id: id, fav: "1")
+      u = current_user.articles.find_by(item_id: id)
+        u.favorite = 1
+        u.save
+        redirect_to embed_sessions_path(item_id: id)
     end
 
 
@@ -114,8 +168,10 @@ class SessionsController < ApplicationController
         url=params[:given_url]
         client = Pocket.client(:access_token => session[:access_token])
         client.modify [{:action => :unfavorite , :item_id => id}]
-        current_user.articles.find_by(item_id: id).favorite = 0
-        redirect_to embed_sessions_path(given_url: url,item_id: id, fav: "0")
+        u = current_user.articles.find_by(item_id: id)
+        u.favorite = 0
+        u.save
+        redirect_to embed_sessions_path(item_id: id)
     end
 
 
@@ -164,6 +220,28 @@ class SessionsController < ApplicationController
 
     def set_callback_url
       @CALLBACK_URL = "#{APP_CONFIG['host']}/sessions/pocket_callback"
+    end
+
+    def initialize_article
+      current_user.articles.each do |i|
+        i.found = 0
+        i.save
+      end
+    end
+
+
+    def remove_deleted
+      current_user.articles.each do |k|
+        puts " ---------- > > > > > > > > > > > > > "
+        puts "#{current_user.articles.pluck("found")}" 
+        puts "#{k.found}" 
+        # puts "> > > > > > > > > > > > > "
+        
+        if k.found == 1
+          # k.destroy
+          puts "destroy > > > > > > ---------------------------------------"
+        end
+      end
     end
   
 
