@@ -8,7 +8,6 @@
   <%- if signed_in? %>
 
   	<p> Welcome <%= current_user.name  %> <%= link_to "Go to your profile page" , current_user %>	</p>
-    <%= link_to "Launch your Pocket4Kindle now", social_login_sessions_path , class: "btn btn-large btn-primary" %>
 
   <%- else %>
 

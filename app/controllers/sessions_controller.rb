@@ -8,8 +8,6 @@ require "embedly"
 class SessionsController < ApplicationController
 
     before_filter :set_callback_url, only: [:pocket_callback,:social_login,:favorite]
-    # before_filter :initialize_article, only: :getter
-    # after_filter :remove_deleted, only: :getter
 
   	def new
 
@@ -19,7 +17,7 @@ class SessionsController < ApplicationController
   		user = User.find_by(email: params[:session][:email].downcase)
   		if user && user.authenticate(params[:session][:password])
   			sign_in user
-  			redirect_back_or user
+  			redirect_to social_login_sessions_path
       else
       	flash[:error] = 'Invalid email/password combination' # Not quite right!
       	render 'new'
@@ -27,26 +25,20 @@ class SessionsController < ApplicationController
   	end
 
   	def pocket_callback
-      # binding.pry
   		access_token = Pocket.get_access_token(session[:code])
-      # binding.pry
     	session[:access_token] = access_token
-    		#puts "session: #{session}"
     	redirect_to getter_sessions_path
   	end
 
   	def social_login
   		  session[:code] = Pocket.get_code(:redirect_uri => @CALLBACK_URL)
     		new_url = Pocket.authorize_url(:code => session[:code], :redirect_uri => @CALLBACK_URL)
-        # binding.pry
-    		puts "new_url: #{new_url}"
-    		puts "session: #{session}"
     		redirect_to new_url
   	end
 
 
 	  def destroy
-    	sign_out
+    	sign_out           
     	redirect_to root_path
   	end
 
@@ -54,78 +46,41 @@ class SessionsController < ApplicationController
   		client = Pocket.client(:access_token => session[:access_token])
   		info = client.retrieve :detailType => :complete
   		list = info["list"]
-      # ret = current_user.articles
-      # puts "before loop > > > > > > > > > > > > > "
-      # puts current_user.articles.length
-      # puts "> > > > > > > > > > > > > "
       x = current_user.articles.pluck("item_id")
-      y = list.keys.map(&:to_i)
+      y = list.keys
 
       new_items = y - x
       deleted_items = x - y
+      updated_items = x & y
+
+      # binding.pry
 
       deleted_items.each do |i|
         current_user.articles.find_by_item_id(i).destroy
       end
 
       new_items.each do |j|
-        i = list[j.to_s]
+        i = list[j]
+        embedly_api = Embedly::API.new :key => '0d3275c1abf64c6f85ba10c8c197e7ef'
+        obj = embedly_api.extract :url => i["given_url"]
 
-        id = i["item_id"]
-        url = i["given_url"]
-
-        if current_user.articles.find_by_item_id id
-            current_user.articles.find_by_item_id(id).update_attributes(:favorite=>i["favorite"])
-        else
-          embedly_api = Embedly::API.new :key => '0d3275c1abf64c6f85ba10c8c197e7ef'
-          obj = embedly_api.extract :url => i["given_url"]
-
-          article = Article.new
-          article.user = current_user
-          article.title = obj[0].title
-          article.description = obj[0].description
-          article.content = obj[0].content
-          article.item_id = i["item_id"]
-          article.favorite = i["favorite"]
-          article.url = i["given_url"]
-          article.save
-        end
+        article = Article.new
+        article.user = current_user
+        article.title = obj[0].title
+        article.description = obj[0].description
+        article.content = obj[0].content
+        article.item_id = i["item_id"]
+        article.favorite = i["favorite"]
+        article.url = i["given_url"]
+        article.save
       end
 
-
-
-      # list.values.each do |i|
-        
-      #   id = i["item_id"]
-      #   url = i["given_url"]
-
-      #   if current_user.articles.find_by_item_id id
-      #     puts "found >>>>>>>>>>>>>>>>>>>>>>>>>"
-      #     current_user.articles.find_by_item_id(id).update_attributes(:found=>1,:favorite=>i["favorite"])
-
-      #   else
-      #     puts "new > > > > > > "
-      #     embedly_api = Embedly::API.new :key => '0d3275c1abf64c6f85ba10c8c197e7ef'
-      #     obj = embedly_api.extract :url => url
-
-      #     article = Article.new
-      #     article.user = current_user
-      #     article.title = obj[0].title
-      #     article.description = obj[0].description
-      #     article.content = obj[0].content
-      #     article.item_id = i["item_id"]
-      #     article.favorite = i["favorite"]
-      #     article.url = i["given_url"]
-      #     article.found = 1
-      #     article.save
-      #   end     
-      # end
-      # puts "after > > > > > > > > > > > > > "
-      # puts current_user.articles.length
-      # puts "#{current_user.articles.pluck("found")}"  
-
-
-
+      updated_items.each do |k|
+        # binding.pry
+        i = list[k]
+        id = i["item_id"]
+        current_user.articles.find_by_item_id(id).update_attributes(:favorite=>i["favorite"])
+      end
 
     end
       	
@@ -220,29 +175,6 @@ class SessionsController < ApplicationController
 
     def set_callback_url
       @CALLBACK_URL = "#{APP_CONFIG['host']}/sessions/pocket_callback"
-    end
-
-    def initialize_article
-      current_user.articles.each do |i|
-        i.found = 0
-        i.save
-      end
-    end
-
-
-    def remove_deleted
-      current_user.articles.each do |k|
-        puts " ---------- > > > > > > > > > > > > > "
-        puts "#{current_user.articles.pluck("found")}" 
-        puts "#{k.found}" 
-        # puts "> > > > > > > > > > > > > "
-        
-        if k.found == 1
-          # k.destroy
-          puts "destroy > > > > > > ---------------------------------------"
-        end
-      end
-    end
-  
+    end  
 
 end
