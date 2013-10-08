@@ -7,7 +7,7 @@ require "embedly"
 
 class SessionsController < ApplicationController
 
-    before_filter :set_callback_url, only: [:pocket_callback,:social_login,:favorite]
+    before_filter :set_callback_url, only: [:pocket_callback,:social_login,:favorite,:getter]
 
   	def new
 
@@ -43,43 +43,47 @@ class SessionsController < ApplicationController
   	end
 
   	def getter
-  		client = Pocket.client(:access_token => session[:access_token])
-  		info = client.retrieve :detailType => :complete
-  		list = info["list"]
-      x = current_user.articles.pluck("item_id")
-      y = list.keys
+      if session[:access_token] 
+    		client = Pocket.client(:access_token => session[:access_token])
+    		info = client.retrieve :detailType => :complete
+    		list = info["list"]
+        x = current_user.articles.pluck("item_id")
+        y = list.keys
 
-      new_items = y - x
-      deleted_items = x - y
-      updated_items = x & y
+        new_items = y - x
+        deleted_items = x - y
+        updated_items = x & y
 
-      # binding.pry
-
-      deleted_items.each do |i|
-        current_user.articles.find_by_item_id(i).destroy
-      end
-
-      new_items.each do |j|
-        i = list[j]
-        embedly_api = Embedly::API.new :key => '0d3275c1abf64c6f85ba10c8c197e7ef'
-        obj = embedly_api.extract :url => i["given_url"]
-
-        article = Article.new
-        article.user = current_user
-        article.title = obj[0].title
-        article.description = obj[0].description
-        article.content = obj[0].content
-        article.item_id = i["item_id"]
-        article.favorite = i["favorite"]
-        article.url = i["given_url"]
-        article.save
-      end
-
-      updated_items.each do |k|
         # binding.pry
-        i = list[k]
-        id = i["item_id"]
-        current_user.articles.find_by_item_id(id).update_attributes(:favorite=>i["favorite"])
+
+        deleted_items.each do |i|
+          current_user.articles.find_by_item_id(i).destroy
+        end
+
+        new_items.each do |j|
+          i = list[j]
+          embedly_api = Embedly::API.new :key => '0d3275c1abf64c6f85ba10c8c197e7ef'
+          obj = embedly_api.extract :url => i["given_url"]
+
+          article = Article.new
+          article.user = current_user
+          article.title = obj[0].title
+          article.description = obj[0].description
+          article.content = obj[0].content
+          article.item_id = i["item_id"]
+          article.favorite = i["favorite"]
+          article.url = i["given_url"]
+          article.save
+        end
+
+        updated_items.each do |k|
+          # binding.pry
+          i = list[k]
+          id = i["item_id"]
+          current_user.articles.find_by_item_id(id).update_attributes(:favorite=>i["favorite"])
+        end
+      else
+        redirect_to social_login_sessions_path
       end
 
     end
