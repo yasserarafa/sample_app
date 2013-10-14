@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131008122918) do
+ActiveRecord::Schema.define(version: 20131014000404) do
 
   create_table "articles", force: true do |t|
     t.string   "title"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20131008122918) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "found"
+    t.integer  "estimated_time", limit: 255
   end
 
   create_table "relationships", force: true do |t|

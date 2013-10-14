@@ -17,6 +17,7 @@
         <%- end %>
         <td><%= link_to 'Archive',archive_sessions_path(id: i.item_id) %></td>
         <td><%= link_to 'Delete',delete_sessions_path(id: i.item_id) %></td>
+        <td> about <%= distance_of_time_in_words(i.estimated_time) %> </td>
       </tr>
     <% end %>
   </tbody>
