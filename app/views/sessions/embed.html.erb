@@ -1,9 +1,7 @@
 <h3> <%= @item.title%> </h>
-	<br/>
 
-<pre> <%= @item.description%> </pre>
 
-<pre> <%= raw(@item.content)%> </pre>
+<pre class= "preStyle" > <%= raw(@item.content)%> </pre>
 
 
 <%= link_to 'Archive',archive_sessions_path(id: @item.item_id) %>

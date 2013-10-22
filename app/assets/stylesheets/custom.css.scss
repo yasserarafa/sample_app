@@ -84,7 +84,7 @@ p {
   line-height: 1;
   &:hover {
     color: #fff;
-    text-decoration: none;
+    text-decoration: underline;
   }
 }
 /* footer */
@@ -93,9 +93,9 @@ footer {
   margin-top: 45px;
   padding-top: 5px;
   border-top: 1px solid #eaeaea;
-  color: #999;
+  color: #173B0B;
   a {
-    color: #555;
+    color: #173B0B;
     &:hover {
       color: #222;
     }
@@ -275,4 +275,14 @@ aside {
 .image-size {
   max-width: 300px;
   max-height: 200px;
+}
+
+.preStyle{
+    height: 800px;
+    width: 600px;
+    overflow: auto;
+    white-space: pre-wrap;
+    background-color: #D8D8D8;
+    word-wrap: break-word ;
+    word-break: break-all;
 }
