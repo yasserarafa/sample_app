@@ -24,6 +24,13 @@ gem 'pocket-ruby'
 gem 'pry'
 gem 'embedly'
 gem 'configatron', '3.0.0.rc1'
+gem "jquery-ui-rails", "~> 4.0.5"
+gem 'devise'
+gem 'omniauth'
+gem 'omniauth-pocket'
+gem 'protected_attributes'
+
+
 
 group :doc do
   gem 'sdoc', '0.3.20', require: false

@@ -4,7 +4,7 @@
       <%= link_to "Pocket4Kindle", root_path, id: "logo" %>
       <nav>
         <ul class="nav pull-right">          
-          <% if signed_in? %>
+          <% if user_signed_in? %>
             <li><%= link_to "Home", getter_sessions_path %></li>
             <li id="fat-menu" class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -20,7 +20,7 @@
               </ul>
             </li>
           <% else %>
-            <li><%= link_to "Sign in", signin_path %></li> 
+            <li><%= link_to "Sign in", new_user_session_path %></li> 
           <% end %>
         </ul>
       </nav>

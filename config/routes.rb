@@ -1,16 +1,25 @@
 SampleApp::Application.routes.draw do
-  resources :microposts, only: [:create, :destroy]
+  root 'static_pages#home'
+  devise_for :users , :controllers => { :omniauth_callbacks => "omniauth_callbacks",:omniauth_authorize => "omniauth_authorize" }
+  # resources :microposts, only: [:create, :destroy]
   resources :users do
     member do
       get :following, :followers
     end
   end
-  root 'static_pages#home'
+   
   resources :sessions, only: [:new, :create, :destroy] do
     collection do
       get :social_login, :pocket_callback, :getter, :embed,:favorite,:archive,:delete,:unfavorite,:favorite_sec,:unfavorite_sec,:send_to_kindle
     end
   end
+
+  devise_scope :user do 
+    match '/sessions/user', to: 'devise/sessions#create', via: :post
+  end
+
+
+  get '/auth/:provider/callback', to: 'devise/sessions#create'
   
   resources :relationships, only: [:create, :destroy]
   match '/signup',  to: 'users#new',            via: 'get'

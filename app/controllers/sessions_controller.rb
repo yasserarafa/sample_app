@@ -13,20 +13,29 @@ class SessionsController < ApplicationController
 
   	end
 
-  	def create
-  		user = User.find_by(email: params[:session][:email].downcase)
-  		if user && user.authenticate(params[:session][:password])
-  			sign_in user
-  			redirect_to social_login_sessions_path
-      else
-      	flash[:error] = 'Invalid email/password combination' # Not quite right!
-      	render 'new'
-      end
-  	end
+  	# def create
+  	# 	user = User.find_by(email: params[:session][:email].downcase)
+  	# 	if user && user.authenticate(params[:session][:password])
+  	# 		sign_in user
+  	# 		redirect_to social_login_sessions_path
+   #    else
+   #    	flash[:error] = 'Invalid email/password combination' # Not quite right!
+   #    	render 'new'
+   #    end
+  	# end
 
   	def pocket_callback
   		access_token = Pocket.get_access_token(session[:code])
     	session[:access_token] = access_token
+      puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+      puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+      # unless current_user
+      #   user= User.find_or_create_by(access_token: access_token)
+      #   user.email = "te7sh@hima.com"
+      #   user.save
+      #   binding.pry
+      #   sign_in(user)
+      # end
     	redirect_to getter_sessions_path
   	end
 
@@ -43,10 +52,14 @@ class SessionsController < ApplicationController
   	end
 
   	def getter
+      puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+      puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+      
       if session[:access_token] 
     		client = Pocket.client(:access_token => session[:access_token])
     		info = client.retrieve :detailType => :complete
     		list = info["list"]
+        # binding.pry
         x = current_user.articles.pluck("item_id")
         y = list.keys
 
@@ -87,11 +100,21 @@ class SessionsController < ApplicationController
       end
 
     end
+
       	
 
     def embed
         item_id = params[:item_id]
         @item = current_user.articles.find_by item_id: item_id
+        x = @item.content.split
+        @y = " "
+        
+        for i in 0..x.length 
+          if i==100
+            break
+          end
+          @y = @y+x[i] + " "
+        end
     end
 
     def favorite

@@ -5,7 +5,7 @@
     This is the home page for the Pocket4Kindle App
   </h2>
 
-  <%- if signed_in? %>
+  <%- if user_signed_in? %>
 
   	<p> Welcome <%= current_user.name  %> <%= link_to "Go to your profile page" , current_user %>	</p>
 
@@ -15,4 +15,4 @@
   <%- end %>	
 </div>
 
-<%= link_to image_tag("pocket4kindle.png", alt: "Rails"), root_path %>
+<%= link_to image_tag("pocket4kindle.png", alt: "Rails"), user_omniauth_authorize_path(:pocket) %>

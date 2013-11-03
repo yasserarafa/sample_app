@@ -1,7 +1,19 @@
-<h3> <%= @item.title%> </h>
+<h3 id="toto"> <%= @item.title%> </h>
 
 
-<pre class= "preStyle" > <%= raw(@item.content)%> </pre>
+<p> 
+
+<script > 
+	(function($) {
+	    $.fn.hasScrollBar = function() {
+
+	        return this.get(0).scrollHeight > this.height();
+	    }
+	})(jQuery);
+</script>
+ </p>
+
+<pre id="koko" class= "preStyle" > <%= raw(@y) %> </pre>
 
 
 <%= link_to 'Archive',archive_sessions_path(id: @item.item_id) %>
@@ -11,3 +23,12 @@
         <%- else %>
           <%= link_to 'unFavorite',unfavorite_sec_sessions_path(given_url: @item.url,item_id: @item.item_id) %>
 <%- end %>
+
+
+
+<p >
+
+  <script > 
+$(function(){
+    alert('pre: ' + $('#koko').hasScrollBar());
+});</script></p>
