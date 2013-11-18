@@ -53,36 +53,3 @@
         <%- else %>
           <%= link_to 'unFavorite',unfavorite_sec_sessions_path(given_url: @item.url,item_id: @item.item_id) %>
 <%- end %>
-
-<!-- <button id="zorar" type="button" >Try it</button> -->
-
-
-<!-- 
-
-<p>
-	<script > 
-		function g(x){
-			$('#koko').append(x).show()
-		}
-        x = "<%=@view.join(',,')%>".split(',,')  
-        c = 0 ;
-		for(i=0;i<x.length;i++){
-			if ($('#koko').hasScrollBar()){
-				break;
-			}
-			c++;
-			g(x[i])
-			g(" ")            
-
-		}
-		z = ""
-		for(i=0;i<c-2;i++){
-			z = z + x[i] + " "
-		}
-
-		$('#koko').innerHTML= z
-
-	</script>
-
-
-</p> -->

@@ -1,4 +1,3 @@
-#require "sinatra"
 
 require "pocket"
 require "embedly"
@@ -10,34 +9,16 @@ class SessionsController < ApplicationController
     before_filter :set_callback_url, only: [:pocket_callback,:social_login,:favorite,:getter]
 
   	def new
-
+      redirect_to new_user_session_path
   	end
 
-  	# def create
-  	# 	user = User.find_by(email: params[:session][:email].downcase)
-  	# 	if user && user.authenticate(params[:session][:password])
-  	# 		sign_in user
-  	# 		redirect_to social_login_sessions_path
-   #    else
-   #    	flash[:error] = 'Invalid email/password combination' # Not quite right!
-   #    	render 'new'
-   #    end
-  	# end
+  	
 
   	def pocket_callback
   		access_token = Pocket.get_access_token(session[:code])
     	session[:access_token] = access_token
       current_user.access_token = access_token
       current_user.save
-      puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-      puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-      # unless current_user
-      #   user= User.find_or_create_by(access_token: access_token)
-      #   user.email = "te7sh@hima.com"
-      #   user.save
-      #   binding.pry
-      #   sign_in(user)
-      # end
     	redirect_to getter_sessions_path
   	end
 
@@ -54,14 +35,11 @@ class SessionsController < ApplicationController
   	end
 
   	def getter
-      puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-      puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-      
+     
       if session[:access_token] 
     		client = Pocket.client(:access_token => session[:access_token])
     		info = client.retrieve :detailType => :complete
     		list = info["list"]
-        # binding.pry
         x = current_user.articles.pluck("item_id")
         y = list.keys
 
@@ -69,7 +47,6 @@ class SessionsController < ApplicationController
         deleted_items = x - y
         updated_items = x & y
 
-        # binding.pry
 
         deleted_items.each do |i|
           current_user.articles.find_by_item_id(i).destroy
@@ -92,7 +69,6 @@ class SessionsController < ApplicationController
         end
 
         updated_items.each do |k|
-          # binding.pry
           i = list[k]
           id = i["item_id"]
           current_user.articles.find_by_item_id(id).update_attributes(:favorite=>i["favorite"])
@@ -108,20 +84,7 @@ class SessionsController < ApplicationController
     def embed
         item_id = params[:item_id]
         @item = current_user.articles.find_by item_id: item_id
-        @x = @item.content.split
-        @y = " "
-      
-        # @text = raw(@item.content)
-        for i in 0..@x.length 
-          if i==@x.length-1
-            break
-          end
-          @y = @y+@x[i] + " "
-        end
-        @view = []
-        @x.each do |c|
-          @view << c   
-        end
+
     end
 
     def favorite

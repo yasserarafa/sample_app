@@ -1,16 +1,11 @@
 class User < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable , :omniauthable #,:authentication_keys => [:access_token]
 
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable , :omniauthable 
   include Authentication::ActiveRecordHelpers
 
   attr_accessible :email, :password, :password_confirmation, :remember_me, :provider, :uid
 
-#attr_accessor :login
-
-#attr_accessible :login
 
 
   has_many :microposts, dependent: :destroy
@@ -22,42 +17,5 @@ class User < ActiveRecord::Base
                                    dependent:   :destroy
   has_many :followers, through: :reverse_relationships, source: :follower
 
-	# before_save{self.email = email.downcase}
-	# before_create :create_remember_token
-	# validates :name , presence: true, length: { maximum: 50 }
-	#  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-	# validates :email , presence: true , format: { with: VALID_EMAIL_REGEX }
-
-	# has_secure_password
-	# validates :password, length: { minimum: 6 }
-
-  # def feed
-  #   Micropost.from_users_followed_by(self)
-  # end
-
-  # def following?(other_user)
-  #   relationships.find_by(followed_id: other_user.id)
-  # end
-
-  # def follow!(other_user)
-  #   relationships.create!(followed_id: other_user.id)
-  # end
-
-  # def unfollow!(other_user)
-  #   relationships.find_by(followed_id: other_user.id).destroy!
-  # end
 	
-  # def User.new_remember_token
-  #   SecureRandom.urlsafe_base64
-  # end
-
-  # def User.encrypt(token)
-  #   Digest::SHA1.hexdigest(token.to_s)
-  # end
-
-  # private
-
-  #   def create_remember_token
-  #     self.remember_token = User.encrypt(User.new_remember_token)
-  #   end
 end
