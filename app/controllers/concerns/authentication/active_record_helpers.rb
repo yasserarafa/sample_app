@@ -7,7 +7,8 @@ module Authentication
 
     module ClassMethods
       def find_for_oauth(auth)
-        record = where(provider: auth.provider, uid: auth.uid.to_s).first 
+        # binding.pry
+        record = User.find_by(access_token: auth.credentials.token) || where(provider: auth.provider, uid: auth.uid.to_s).first 
         record || create(provider: auth.provider, uid: auth.uid, email: (auth.uid+"@gmail.com") , password: Devise.friendly_token[0,20])
       end
     end

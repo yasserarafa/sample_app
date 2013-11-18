@@ -1,19 +1,49 @@
 <h3 id="toto"> <%= @item.title%> </h>
 
+<head>
+      <!-- Include the Monocle library and styles -->
+      <script src="scripts/monocore.js"></script>
+      <script src="scripts/monoctrl.js"></script>
+      <link rel="stylesheet" type="text/css" href="styles/monocore.css" />
+      <link rel="stylesheet" type="text/css" href="styles/monoctrl.css" />
+    
+    </head>
 
 <p> 
 
 <script > 
 	(function($) {
 	    $.fn.hasScrollBar = function() {
-
-	        return this.get(0).scrollHeight > this.height();
+	    	
+	        return this.get(0).scrollHeight > this.get(0).clientHeight;
 	    }
 	})(jQuery);
 </script>
  </p>
 
-<pre id="koko" class= "preStyle" > <%= raw(@y) %> </pre>
+
+
+<pre id="koko" class= "preStyle" >
+	<div id="soso">
+		<%= @item.content.html_safe%>
+	</div>
+</pre>
+
+ <!-- Instantiate the reader when the containing element has loaded -->
+      <script>
+       function createStencil(rdr) {
+    	var stencil = new Monocle.Controls.Stencil(rdr);
+    	rdr.addControl(stencil);
+	    // This line is useful mostly for testing:
+	    // it highlights the stencil's link cutouts.
+	    stencil.toggleHighlights();
+	  }
+
+      Monocle.Reader('koko',null, null,  function (rdr) {
+      window.reader = rdr;
+      
+      createStencil(rdr);
+    });</script>
 
 
 <%= link_to 'Archive',archive_sessions_path(id: @item.item_id) %>
@@ -24,11 +54,35 @@
           <%= link_to 'unFavorite',unfavorite_sec_sessions_path(given_url: @item.url,item_id: @item.item_id) %>
 <%- end %>
 
+<!-- <button id="zorar" type="button" >Try it</button> -->
 
 
-<p >
+<!-- 
 
-  <script > 
-$(function(){
-    alert('pre: ' + $('#koko').hasScrollBar());
-});</script></p>
+<p>
+	<script > 
+		function g(x){
+			$('#koko').append(x).show()
+		}
+        x = "<%=@view.join(',,')%>".split(',,')  
+        c = 0 ;
+		for(i=0;i<x.length;i++){
+			if ($('#koko').hasScrollBar()){
+				break;
+			}
+			c++;
+			g(x[i])
+			g(" ")            
+
+		}
+		z = ""
+		for(i=0;i<c-2;i++){
+			z = z + x[i] + " "
+		}
+
+		$('#koko').innerHTML= z
+
+	</script>
+
+
+</p> -->

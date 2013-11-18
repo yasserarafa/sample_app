@@ -27,6 +27,8 @@ class SessionsController < ApplicationController
   	def pocket_callback
   		access_token = Pocket.get_access_token(session[:code])
     	session[:access_token] = access_token
+      current_user.access_token = access_token
+      current_user.save
       puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
       puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
       # unless current_user
@@ -106,14 +108,19 @@ class SessionsController < ApplicationController
     def embed
         item_id = params[:item_id]
         @item = current_user.articles.find_by item_id: item_id
-        x = @item.content.split
+        @x = @item.content.split
         @y = " "
-        
-        for i in 0..x.length 
-          if i==100
+      
+        # @text = raw(@item.content)
+        for i in 0..@x.length 
+          if i==@x.length-1
             break
           end
-          @y = @y+x[i] + " "
+          @y = @y+@x[i] + " "
+        end
+        @view = []
+        @x.each do |c|
+          @view << c   
         end
     end
 

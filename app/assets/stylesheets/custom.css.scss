@@ -286,3 +286,14 @@ aside {
     word-wrap: break-word ;
     word-break: break-all;
 }
+
+
+.preStyle1{
+    height: 500px;
+    width: 600px;
+    overflow: auto;
+    white-space: pre-wrap;
+    background-color: #D8D8D8;
+    word-wrap: break-word ;
+    word-break: break-all;
+}

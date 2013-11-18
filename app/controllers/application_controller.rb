@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
     nil
   end
 
-  # def after_sign_in_path_for(user)
-  #   user_path(user)
-  # end
+  def after_sign_in_path_for(user)
+    getter_sessions_path
+  end
 end

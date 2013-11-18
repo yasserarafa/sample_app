@@ -5,7 +5,7 @@
 
 
   <tbody>
-      <% current_user.articles.each do |i| %>
+    <% current_user.articles.each do |i| %>
       <tr>
         <td><%= i.title %></td>
       	<td><%= link_to 'Go to it',i.url %></td>

@@ -11,8 +11,10 @@
 
   <%- else %>
 
-    <%= link_to "Sign up now!", signup_path , class: "btn btn-large btn-primary" %>
+    <%= link_to "Sign up now!", new_user_registration_url , class: "btn btn-large btn-primary" %>
   <%- end %>	
 </div>
 
-<%= link_to image_tag("pocket4kindle.png", alt: "Rails"), user_omniauth_authorize_path(:pocket) %>
+ <%- unless user_signed_in? %>
+	<%= link_to image_tag("pocket4kindle.png", alt: "Rails"), user_omniauth_authorize_path(:pocket) %>
+<%- end %>	
